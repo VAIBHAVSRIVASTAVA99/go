@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Output Page with Background Image</title>
+    <script src="https://cdn.tailwindcss.com"></script> 
+    <style>
+        .bg-custom {
+            background-image: url('./pexels-sebastian-189349\ \(1\).jpg'); 
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-custom bg-cover bg-center min-h-screen flex items-center justify-center">
+
+    <div class="text-center text-white p-6 bg-opacity-50 bg-black rounded-lg w-11/12 max-w-4xl">
+        <h1 class="text-5xl font-bold mb-4">Your Travel Itinerary</h1>
+        <p class="text-xl mb-6">Explore the beautiful locations and have an amazing journey!</p>
+
+        <!-- The itinerary will be displayed here -->
+        <div id="itinerary-output" class="bg-gray-800 p-4 rounded-lg text-lg text-white mt-4">
+            <p id="loading">Loading itinerary...</p>
+        </div>
+    </div>
+
+    <script>
+        async function fetchItinerary() {
+            try {
+                
+                const location = localStorage.getItem("location");
+                const days = localStorage.getItem("days");
+
+                // const itinerary = localStorage.getItem('itinerary');
+                console.log(location);
+                console.log(days);
+                const response = await fetch("http://localhost:3000/api/generate-itinerary", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ location, days }),
+                });
+                console.log(response);
+                // console.log("Response Status:", response.status);
+                if (response.ok) {
+            const data = await response.json();
+            // console.log("Response Data:", data);
+            const itinerary = data.itinerary;
+            console.log(data.itinerary);
+            document.getElementById("loading").innerHTML = `
+        <h3 class="text-lg font-semibold mb-2">Your Itinerary for ${location} (${days} days)</h3>
+        <p>${itinerary}</p>
+    `;
+           
+                } else {
+                    const error = await response.json();
+                    document.getElementById("itinerary-output").innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
+                }
+            } catch (err) {
+                console.error("Error fetching itinerary:", err);
+                document.getElementById("itinerary-output").innerHTML = `<p class="text-red-500">An error occurred. Please try again.</p>`;
+            }
+        }
+
+        
+        window.onload = fetchItinerary;
+    </script>
+</body>
+</html>

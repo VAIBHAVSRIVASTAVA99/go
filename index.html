@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Itinerary Planner</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .bg-custom {
+            background-image: url('./teagaren.jpg'); 
+            background-size: cover;
+            background-position: center;
+        }
+        .blur-background {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body class="bg-custom flex items-center justify-center min-h-screen">
+    <div class="p-6 rounded-lg w-96 z-10">
+        <header class="text-black text-center py-6">
+            <h1 class="text-3xl font-bold">Plan Your Perfect Trip</h1>
+        </header>
+        <main class="container mx-auto flex flex-col items-center mt-6 space-y-12 px-4 blur-background p-8">
+            <h2 class="text-2xl font-semibold text-center mb-4">Create Your Travel Itinerary</h2>
+            <form id="travel-form" class="space-y-4">
+                <div>
+                    <label for="location"  class="block text-sm font-medium text-gray-700 text-center">Destination:</label>
+                    <input type="text" id="location" placeholder="Enter a location" required 
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                </div>
+                <div>
+                    <label for="days"  class="block text-sm font-medium text-gray-700 text-center">Number of Days:</label>
+                    <input type="number" id="days" min="1" placeholder="Enter days" required 
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                </div>
+                <button type="button" id="generate" 
+                    class="w-full bg-blue-500 text-white py-2 rounded-md font-medium hover:bg-blue-600 transition duration-200">
+                    Generate Schedule
+                </button>
+            </form>
+            <div id="output" class="mt-6 p-4 bg-gray-100 rounded-md shadow-sm text-sm text-gray-800"></div>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById("generate").addEventListener("click", async function () {
+    const location = document.getElementById("location").value;
+    const days = document.getElementById("days").value;
+    console.log(location);
+    console.log(days);
+    if (!location || !days) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    try {
+        localStorage.setItem("location", location);
+        localStorage.setItem("days", days);
+        const response = await fetch("http://localhost:3000/api/generate-itinerary", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ location, days }),
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            document.getElementById("output").innerHTML = `<p class="text-red-500">${error.message}</p>`;
+            console.error("Error response:", error);
+        } else {
+            const data = await response.json();
+            const itinerary = data.itinerary; 
+            // localStorage.setItem('itinerary', itinerary);
+            // Assume the API responds with an 'itinerary' field
+            if (response.ok) {
+                    window.location.replace("outputpage.html"); // Redirect to index.html
+                } 
+            ;
+        }
+    } catch (err) {
+        console.error("Error:", err);
+        document.getElementById("output").innerHTML = `<p class="text-red-500">An error occurred. Please try again.</p>`;
+    }
+});
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+*{
+    margin:0 0 0 0; 
+    padding:0;
+}
+.container{
+    overflow: hidden;
+    position: relative;
+    height:100vh;
+    width: 100%;
+    /* background-color: aqua; */
+}
+.displayimage{
+    width: 100%;
+    height:99.4%;
+    /* object-fit: cover; */
+    /* filter:blur(100%); */
+    filter: brightness(50%);
+    z-index: -1;
+}
+.navbar {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: center;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    /* margin: 1rem; */
+    /* font-size: 2rem; */
+}
+.left{
+    /* text-decoration: none; */
+     margin-top:0.5em; 
+    margin-left:5rem;
+    font-size: 1em;
+} 
+ a{ 
+    text-decoration: none;
+    color: white; 
+}
+.right{
+    text-decoration: none;
+    font-size: 1em;
+    margin-top:0.5em;
+    margin-right:5rem;
+} 
+.centertext{
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    justify-content: center;
+    align-content: center;
+    color: white;
+    /* font-weight: bolder; */
+    /* font-size: 1.5em */
+    /* margin: 1rem; */
+    /* font-size: 2rem; */
+    text-align: center;
+    gap:1rem;
+    padding:1em;
+}
+.centertext span {
+    font-weight: bold; 
+    font-size: 1.5em;
+}
+#textno{
+    /* border-radius-top: 20%; */
+    /* border-radius: 15px; */
+     /* Rounds the corners */
+     border-radius: 15px;
+    color: black;
+    background-color: beige;
+    /* margin-left: 1em; */
+    font-size: .7em;
+    height: 2em;
+    width:50%;
+    /* margin-left: 5rem;  */
+    /* margin-right: 5rem;  */
+}
+input{
+    border:  white ;
+    text-decoration: none;
+    /* border: none; */
+    background-color: white;
+    background: url('mail.webp') no-repeat 10px center;
+    background-size: 20px 20px; 
+    padding-left:3em;/* Size of the image */
+}
+input::placeholder{
+    font-size: .8em;
+    margin-left: 0;
+    text-align: center;
+}
+input::text{
+    margin-left: 2em;
+}
+#button {
+    border-radius: 12px;
+    border: none;
+    top:0;
+    background-color:rgb(213, 97, 65);
+    color: white;
+    /* padding:.5em .5em; */
+    /* font-size: 16px; */
+     /* height: em; */
+     font-size: .6em;
+    cursor: pointer;
+    text-align: center;
+    gap:1rem;
+    padding:.7em;
+}
+#secondpart{
+    background-color: rgb(214, 213, 213);
+    overflow: hidden;
+
+}
+#recentDeal{
+    overflow: hidden;
+
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 2em;
+    margin:.7em;
+}
+.container-card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+/* Card styles */
+.card {
+    width: calc(25% - 1rem); /* 4 cards in a row */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Adds hover effect */
+}
+
+.card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 1rem;
+}
+
+.card-content h3 {
+    font-size: 1.rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-content p {
+    font-size: 0.7rem;
+    color: #555;
+}
+
+/* Responsive: Stacking cards on small screens */
+@media (max-width: 768px) {
+    .card {
+        width: calc(50% - 1rem); /* 2 cards in a row on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 100%; /* 1 card per row on mobile */
+    }
+}
